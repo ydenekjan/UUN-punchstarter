@@ -18,7 +18,7 @@ const ProjectCard = () => {
             unde corrupti animi eos aperiam maxime deleniti, id sunt assumenda
             architecto consectetur. Iste!
           </p>
-          <div className="badge badge-primary p-4">Category</div>
+          <div className="badge badge-primary p-4 font-bold">Category</div>
           <div>
             <div className="grid grid-cols-2">
               <div className="flex justify-start text-success text-lg font-bold">
