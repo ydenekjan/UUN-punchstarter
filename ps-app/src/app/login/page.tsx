@@ -126,8 +126,9 @@ const Page = () => {
       </div>
       <div className={"flex flex-col gap-2 items-center"}>
         <button
-          disabled={loading}
-          className={`transition w-full py-2 ${loading ? "bg-emerald-500" : "bg-emerald-600 hover:bg-emerald-700"} text-white rounded-lg`}
+          type={"submit"}
+          disabled={!formData.username || !formData.password || loading}
+          className={`${formData.username && formData.password && !loading ? "hover:bg-emerald-700" : "bg-opacity-40"} transition w-full py-2 bg-emerald-600 text-white rounded-lg`}
         >
           Přihlásit se
         </button>
