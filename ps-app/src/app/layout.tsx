@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../styles/globals.css";
 import React from "react";
+import { UserContextProvider } from "@/context/UserContext";
 
 export const metadata: Metadata = {
   title: "PunchStarter | Home",
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <UserContextProvider>
+        <body>{children}</body>
+      </UserContextProvider>
     </html>
   );
 }

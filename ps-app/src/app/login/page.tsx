@@ -5,6 +5,9 @@ import { IoMdCheckmark } from "react-icons/io";
 import Link from "next/link";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { IUser } from "@/utils/types/types";
+import axios from "axios";
+import { useUserContext } from "@/context/UserContext";
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +20,7 @@ const Page = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(formData);
+  const { setUser } = useUserContext();
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -31,7 +34,13 @@ const Page = () => {
 
     setLoading(true);
 
-    //TODO: api auth call
+    axios
+      .post<IUser>("/auth", formData)
+      .then((res) => {
+        if (res.status === 201) setUser(res.data);
+      })
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -45,9 +54,7 @@ const Page = () => {
       <label className={"flex flex-col text-sm gap-2"}>
         Váš Email
         <div
-          className={
-            "w-full flex rounded-md border focus-within:border-neutral-400 pl-4 py-2"
-          }
+          className={`w-full flex rounded-md border pl-4 py-2 ${error ? "border-red-500" : "focus-within:border-neutral-400"}`}
         >
           <input
             className={"w-full bg-transparent outline-0"}
@@ -61,9 +68,7 @@ const Page = () => {
         <label className={"flex flex-col text-sm gap-2"}>
           Váše Heslo
           <div
-            className={
-              "w-full flex rounded-md border focus-within:border-neutral-400 pl-4 py-2"
-            }
+            className={`w-full flex rounded-md border ${error ? "border-red-500" : "focus-within:border-neutral-400"} pl-4 py-2`}
           >
             <input
               className={"w-full bg-transparent outline-0"}
